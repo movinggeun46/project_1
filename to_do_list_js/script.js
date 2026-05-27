@@ -1,6 +1,5 @@
 // HTML 요소 가져오기
 const todoInput = document.querySelector('#todo-input');
-const addButton = document.querySelector('#add-button');
 const todoList = document.querySelector('#todo-list');
 
 // 할 일 데이터 저장 (배열)
@@ -20,13 +19,27 @@ todos.push({
 });
 
 todoInput.value = ''; // 입력창 초기화
-console.log(todos); // 콘솔에 할 일 목록 출력
+renderTodos();
 }
 
-function handleEnter(e) {
+function handleEnter(e) { // onkeydown으로 키 입력을 받고, event.key가 'Enter'일 때만 addTodo()를 호출해서 Enter로도 추가
     if (e.key === 'Enter') {
         addTodo();
     }
 }
+
+// 화면에 할 일 목록 표시 (innerHTML 사용)
+function renderTodos() {
+    let html = '';
+    for (let i = 0; i < todos.length; i++) {
+        html += `
+            <li class="todo-item">
+                <span>${todos[i].text}</span>
+            </li>
+        `;
+    }
+    todoList.innerHTML = html;
+}
+
 
 
