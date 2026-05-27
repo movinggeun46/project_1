@@ -48,6 +48,7 @@ function renderTodos() {
             <li class="${className}">
                 <span>${todos[i].text}</span>
                 <button type="button" onclick="toggleComplete(${i})">완료</button>
+                <button type="button" onclick="editTodo(${i})">수정</button>
                 <button type="button" onclick="deleteTodo(${i})">삭제</button>
             </li>
         `;
@@ -72,4 +73,21 @@ function deleteTodo(index) {
 }
 
 
+function editTodo(index) {
+    const newText = prompt('할 일을 수정하세요', todos[index].text);
 
+    if (newText === null) { // 수정 취소 버튼을 누르면 함수 종료
+        return;
+    }
+
+    const trimmed = newText.trim(); // 입력값을 가져오고 앞뒤 공백 제거 후 변수에 저장
+
+    if (trimmed === '') { // 입력값이 비어있으면 함수 종료
+        alert('할 일을 입력해주세요.');
+        return;
+    }
+
+    todos[index].text = trimmed; // 할 일 목록에서 해당 인덱스의 요소 수정
+    renderTodos();
+    localStorage.setItem('todos', JSON.stringify(todos)); 
+}
