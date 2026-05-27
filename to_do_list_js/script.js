@@ -3,7 +3,9 @@ const todoInput = document.querySelector('#todo-input');
 const todoList = document.querySelector('#todo-list');
 
 // 할 일 데이터 저장 (배열)
-let todos = [];
+let todos = JSON.parse(localStorage.getItem('todos')) || []; // localStorage에서 할 일 목록 가져오기 (없으면 빈 배열로 초기화)
+
+renderTodos();
 
 // 할 일 추가 기능 함수 정의
 function addTodo() {
@@ -13,13 +15,17 @@ function addTodo() {
         alert('할 일을 입력해주세요.');
         return;
 }
+
 todos.push({
     text: text,
     completed: false
+
 });
 
 todoInput.value = ''; // 입력창 초기화
 renderTodos();
+
+localStorage.setItem('todos', JSON.stringify(todos)); // 할 일 목록을 localStorage에 저장
 }
 
 function handleEnter(e) { // onkeydown으로 키 입력을 받고, event.key가 'Enter'일 때만 addTodo()를 호출해서 Enter로도 추가
