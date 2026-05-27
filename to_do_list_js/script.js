@@ -48,6 +48,7 @@ function renderTodos() {
             <li class="${className}">
                 <span>${todos[i].text}</span>
                 <button type="button" onclick="toggleComplete(${i})">완료</button>
+                <button type="button" onclick="deleteTodo(${i})">삭제</button>
             </li>
         `;
     }
@@ -61,6 +62,12 @@ function toggleComplete(index) {
     const items = document.querySelectorAll('.todo-item');
     items[index].classList.toggle('completed');
 
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+function deleteTodo(index) {
+    todos.splice(index, 1); // 할 일 목록에서 해당 인덱스의 요소 삭제
+    renderTodos();
     localStorage.setItem('todos', JSON.stringify(todos));
 }
 
