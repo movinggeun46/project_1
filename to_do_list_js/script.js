@@ -34,17 +34,34 @@ function handleEnter(e) { // onkeydown으로 키 입력을 받고, event.key가 
     }
 }
 
-// 화면에 할 일 목록 표시 (innerHTML 사용)
+// 화면에 할 일 목록 표시 
 function renderTodos() {
     let html = '';
+
     for (let i = 0; i < todos.length; i++) {
+        let className = 'todo-item';
+        if (todos[i].completed) {
+            className = 'todo-item completed';
+        }
+
         html += `
-            <li class="todo-item">
+            <li class="${className}">
                 <span>${todos[i].text}</span>
+                <button type="button" onclick="toggleComplete(${i})">완료</button>
             </li>
         `;
     }
+
     todoList.innerHTML = html;
+}
+
+function toggleComplete(index) {
+    todos[index].completed = !todos[index].completed;
+
+    const items = document.querySelectorAll('.todo-item');
+    items[index].classList.toggle('completed');
+
+    localStorage.setItem('todos', JSON.stringify(todos));
 }
 
 
